@@ -1,0 +1,6 @@
+# Configs
+configs/*.json
+# Model checkpoints
+models/*.pt
+# Cache
+scripts/__pycache__/
