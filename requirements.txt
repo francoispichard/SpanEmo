@@ -1,5 +1,5 @@
 numpy==1.14.0
-sklearn==0.22.2
+scikit-learn==0.22.2.post1
 fastprogress==0.2.3
 docopt==0.6.2
 transformers==3.0.2
