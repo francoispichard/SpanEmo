@@ -1,3 +1,6 @@
+# Data
+data/prepared*
+data/processed_tweets_*
 # Configs
 configs/*.json
 # Model checkpoints
