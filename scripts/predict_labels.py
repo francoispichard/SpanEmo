@@ -78,6 +78,7 @@ def main(args):
     # Input data
     input_folder = os.path.join('..', 'data', f'prepared_{args.prepare_name}')
     input_files_list = glob.glob(os.path.join(input_folder, '*.txt'))[18750:]
+    # Rerun processing for the following files
     # input_files_list = [os.path.join(input_folder, '1275884652.txt'), os.path.join(input_folder,'2576642743.txt')]
 
     # Create folder for output data
