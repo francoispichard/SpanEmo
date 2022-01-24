@@ -18,6 +18,8 @@ from torch.utils.data import DataLoader
 from data_loader_english import DataClass
 from model import SpanEmo
 
+from transformers import BertTokenizer
+bert_tokeniser = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
 
 # Disable print
 def disable_print():
@@ -55,7 +57,7 @@ class PredictOnUnlabelled(object):
 
 def preprocess_file(input_filepath):
     # Define Dataloader
-    unlabelled_dataset = DataClass(args.max_length, input_filepath)
+    unlabelled_dataset = DataClass(args.max_length, input_filepath, bert_tokeniser)
     unlabelled_data_loader = DataLoader(unlabelled_dataset, batch_size=args.batch_size, shuffle=False)
     return [input_filepath, unlabelled_data_loader]
 
@@ -75,7 +77,8 @@ def main(args):
 
     # Input data
     input_folder = os.path.join('..', 'data', f'prepared_{args.prepare_name}')
-    input_files_list = glob.glob(os.path.join(input_folder, '*.txt'))
+    input_files_list = glob.glob(os.path.join(input_folder, '*.txt'))[18750:]
+    # input_files_list = [os.path.join(input_folder, '1275884652.txt'), os.path.join(input_folder,'2576642743.txt')]
 
     # Create folder for output data
     time_fmt = '%Y-%m-%d_%H-%M-%S'
