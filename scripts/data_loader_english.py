@@ -42,12 +42,12 @@ def twitter_preprocessor():
 
 
 class DataClass(Dataset):
-    def __init__(self, max_length, filename):
+    def __init__(self, max_length, filename, bert_tokeniser):
         self.max_length = max_length
         self.filename = filename
         self.data, self.labels = self.load_dataset()
 
-        self.bert_tokeniser = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
+        self.bert_tokeniser = bert_tokeniser 
 
         self.inputs, self.lengths, self.label_indices = self.process_data()
 
@@ -55,11 +55,14 @@ class DataClass(Dataset):
         """
         :return: dataset after being preprocessed and tokenised
         """
-        df = pd.read_csv(self.filename, sep='\t')
-        # ID and Tweet are the two columns in the DataFrame
-        x_train = df.Tweet.apply(lambda row: str(row)).values
-        # Dummy true labels. List of possible labels (11 columns): 'anger', 'anticipation', 'disgust', 'fear', 'joy', 'love', 'optimism', 'pessimism', 'sadness', 'surprise', 'trust'
-        y_train = np.zeros((len(df), 11), dtype=int)
+        try:
+            df = pd.read_csv(self.filename, sep='\t')
+            # ID and Tweet are the two columns in the DataFrame
+            x_train = df.Tweet.apply(lambda row: str(row)).values
+            # Dummy true labels. List of possible labels (11 columns): 'anger', 'anticipation', 'disgust', 'fear', 'joy', 'love', 'optimism', 'pessimism', 'sadness', 'surprise', 'trust'
+            y_train = np.zeros((len(df), 11), dtype=int)
+        except pd.errors.ParserError:
+            print(f'Malformed input file: {self.filename}')
         return x_train, y_train
 
     def process_data(self):
