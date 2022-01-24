@@ -1,4 +1,6 @@
 # Data
+data/*.txt
+data/*.py
 data/prepared*
 data/processed_tweets_*
 # Configs
