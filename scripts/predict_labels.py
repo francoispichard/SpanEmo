@@ -77,9 +77,7 @@ def main(args):
 
     # Input data
     input_folder = os.path.join('..', 'data', f'prepared_{args.prepare_name}')
-    input_files_list = glob.glob(os.path.join(input_folder, '*.txt'))[18750:]
-    # Rerun processing for the following files
-    # input_files_list = [os.path.join(input_folder, '1275884652.txt'), os.path.join(input_folder,'2576642743.txt')]
+    input_files_list = glob.glob(os.path.join(input_folder, '*.txt'))
 
     # Create folder for output data
     time_fmt = '%Y-%m-%d_%H-%M-%S'
@@ -98,9 +96,6 @@ def main(args):
     checkpoint_path = os.path.join('..', 'models', args.model_name)
     
     num_worker_processes = multiprocessing.cpu_count()-10
-    # parallel = joblib.Parallel(n_jobs=num_cpu_threads) # 'loky' backend: single-host, process-based parallelism (used by default)
-    # preprocess_file_delayed = joblib.delayed(preprocess_file)
-    # parallel(preprocess_file_delayed(input_filepath) for input_filepath in tqdm(input_files_list, desc='Processing files', unit='file'))
 
     print('About to start processing...')
     s_time = datetime.datetime.now()
